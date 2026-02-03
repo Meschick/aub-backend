@@ -21,7 +21,10 @@ namespace aub_backend.Infrastructure.Persistence.Mappings
 
             builder.Property(x => x.Email)
                 .IsRequired();
-            
+
+            builder.Property(x => x.CustomerStatus)
+                .HasConversion<int>()
+                .IsRequired();
         }
     }
 }

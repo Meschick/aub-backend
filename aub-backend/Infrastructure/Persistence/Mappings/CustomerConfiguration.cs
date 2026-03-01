@@ -6,9 +6,6 @@ namespace aub_backend.Infrastructure.Persistence.Mappings
 {
     public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
-        // Fazemos todo o mapeamento da nossa entidade;
-        // Restricoes
-
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
             builder.ToTable("Customers");
@@ -21,6 +18,13 @@ namespace aub_backend.Infrastructure.Persistence.Mappings
 
             builder.Property(x => x.Email)
                 .IsRequired();
+
+            builder.Property(x => x.Telephone)
+                .HasMaxLength(11);
+
+            builder.Property(x => x.Cpf)
+                .IsRequired()
+                .HasMaxLength(11);
 
             builder.Property(x => x.CustomerStatus)
                 .HasConversion<int>()

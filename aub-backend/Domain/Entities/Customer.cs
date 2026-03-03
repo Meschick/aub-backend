@@ -50,6 +50,15 @@ namespace aub_backend.Domain.Entities
             if (string.IsNullOrWhiteSpace(cpf)) throw new ArgumentException("CPF é obrigatório");
         }
 
+        public void UpdateEntity(string name, string telephone, string email, string cpf, DateOnly dateOfBirth)
+        {
+            Validate(name, email , cpf);
+            Name = name;
+            Telephone = telephone;
+            Email = email;
+            Cpf = cpf;
+            DateOfBirth = dateOfBirth;
+        } 
 
     }
 }

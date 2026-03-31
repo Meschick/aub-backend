@@ -42,7 +42,6 @@ namespace aub_backend.Domain.Entities
             CustomerStatus = customerStatus;
         }
 
-
         private void Validate(string name, string email, string cpf)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Nome é obrigatório");

@@ -23,9 +23,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="API\" />
-    <Folder Include="API\Controllers\" />
-  </ItemGroup>
-
 </Project>

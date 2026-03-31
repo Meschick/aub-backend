@@ -1,4 +1,5 @@
-﻿using aub_backend.Domain.Entities;
+﻿using aub_backend.Application.DTOs;
+using aub_backend.Domain.Entities;
 
 namespace aub_backend.Application.Interfaces
 {
@@ -6,7 +7,7 @@ namespace aub_backend.Application.Interfaces
     {
             Task<Customer> AddAsync(Customer customer);
             Task<Customer?> GetByIdAsync(int id);
-            Task<IEnumerable<Customer>> GetAllAsync();
+            Task<PagedResponse<Customer>> GetAllAsync(PaginationParams paginationParams);
             Task<Customer?> UpdateAsync(Customer customer);
             Task<bool> DeleteAsync(int id);   
     }

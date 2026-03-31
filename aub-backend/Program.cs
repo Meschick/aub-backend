@@ -1,4 +1,7 @@
+using aub_backend.Application.Interfaces;
+using aub_backend.Application.Services;
 using aub_backend.Infrastructure.Persistence.Context;
+using aub_backend.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +18,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Configurando o DbContext com SQL Server
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// Serviços de repositório e serviço para injeção de dependência
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
 
 var app = builder.Build();
 

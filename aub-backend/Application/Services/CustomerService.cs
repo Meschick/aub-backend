@@ -1,4 +1,5 @@
-﻿using aub_backend.Application.Interfaces;
+﻿using aub_backend.Application.DTOs;
+using aub_backend.Application.Interfaces;
 using aub_backend.Domain.Entities;
 
 namespace aub_backend.Application.Services
@@ -12,19 +13,15 @@ namespace aub_backend.Application.Services
         {
             _customerRepository = customerRepository;
         }
-
-        // Retornar o DTO nao a entidade original
-        // Criar os dtos de response, create, update
-
-        public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
+        public async Task<PagedResponse<Customer>> GetAllCustomersAsync( PaginationParams paginationParams)
         {
-            return await _customerRepository.GetAllAsync();
+            return await _customerRepository.GetAllAsync(paginationParams);
         }
         public Task<Customer?> GetCustomerByIdAsync(int id)
         {
             var customer = _customerRepository.GetByIdAsync(id);
 
-            if(customer == null) throw new Exception("Cliente nao encontrado");
+            if(customer == null) throw new Exception("Cliente não encontrado");
 
             return customer;
         }
@@ -40,6 +37,5 @@ namespace aub_backend.Application.Services
         {
             throw new NotImplementedException();
         }
-       
     }
 }

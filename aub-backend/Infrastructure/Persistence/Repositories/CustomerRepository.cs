@@ -1,7 +1,9 @@
-﻿using aub_backend.Application.Interfaces;
+﻿using aub_backend.Application.DTOs;
+using aub_backend.Application.Interfaces;
 using aub_backend.Domain.Entities;
 using aub_backend.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace aub_backend.Infrastructure.Persistence.Repositories
 {
@@ -35,11 +37,23 @@ namespace aub_backend.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task<IEnumerable<Customer>> GetAllAsync()
+        public async Task<PagedResponse<Customer>> GetAllAsync(PaginationParams paginationParams)
         {
-          return await _context.Customers
-                .AsNoTracking()
-                .ToListAsync();    
+            var query = _context.Customers.AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            var data = await query
+                .Skip((paginationParams.PageNumber - 1) * paginationParams.PageSize)
+                .Take(paginationParams.PageSize)
+                .ToListAsync();
+
+            return new PagedResponse<Customer>(
+                    data,
+                    totalCount,
+                    paginationParams.PageNumber,
+                    paginationParams.PageSize
+            );
         }
 
         public async Task<Customer?> GetByIdAsync(int id)

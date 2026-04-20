@@ -7,7 +7,7 @@ namespace aub_backend.Application.Interfaces
     {
             Task<Customer> AddCustomerAsync(Customer customer);
             Task<Customer?> GetCustomerByIdAsync(int id);
-            Task<PagedResponse<Customer>> GetAllCustomersAsync(PaginationParams paginationParams);
+            Task<PagedResponse<CustomerResponseDto>> GetAllCustomersAsync(PaginationParams paginationParams);
             Task<Customer?> UpdateCustomerAsync(Customer customer);
             Task<bool> DeleteCustomerAsync(int id);
     }

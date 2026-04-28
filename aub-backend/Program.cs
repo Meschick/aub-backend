@@ -1,15 +1,23 @@
+using aub_backend.API.Conventions;
 using aub_backend.Application.Interfaces;
 using aub_backend.Application.Profiles;
 using aub_backend.Application.Services;
 using aub_backend.Infrastructure.Persistence.Context;
 using aub_backend.Infrastructure.Persistence.Repositories;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Conventions.Add(new RouteTokenTransformerConvention(
+            new ParameterTransformer()
+    ));
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,6 +31,8 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 // Serviços de repositório e serviço para injeção de dependência
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+// Adicionando AutoMapper
 builder.Services.AddAutoMapper(typeof(CustomerProfile));
 
 var app = builder.Build();
